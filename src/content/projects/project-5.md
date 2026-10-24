@@ -1,10 +1,9 @@
 ---
-title: "[Project Name]"
-industry: "[Industry]"
-platform: GoHighLevel
+title: Americore Web Mock up
+industry: Trucking consulting
+platform: Website
 summary: "[One line on what you built and the result]"
-image: ""
-link: ""
+link: https://onetwosolutions.com/
 order: 5
 published: true
 ---
