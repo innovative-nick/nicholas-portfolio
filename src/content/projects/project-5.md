@@ -1,7 +1,6 @@
 ---
 title: "One Two Solutions "
 industry: Trucking consulting
-platform: Website
 summary: Designed and built a site, so trucking owner-operators can see the
   services at a glance and book a free consultation.
 image: /images/One Two Solutions Web Mock up-1.jpg

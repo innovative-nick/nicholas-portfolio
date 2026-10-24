@@ -9,7 +9,7 @@ content:
     path: src/content/projects
     filename: "{primary}.md"
     view:
-      fields: [title, industry, platform, published]
+      fields: [title, industry, published]
       primary: title
       sort: [order, title]
       default:
@@ -24,11 +24,6 @@ content:
         label: Industry
         type: string
         description: e.g. Real estate, Finance, Aviation
-      - name: platform
-        label: Platform
-        type: select
-        options:
-          values: [Website, GoHighLevel, WordPress, Wix, Squarespace, Webflow, Custom code, Landing page]
       - name: summary
         label: One-line summary
         type: text

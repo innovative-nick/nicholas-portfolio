@@ -250,7 +250,7 @@ const description = site.hero_intro;
               <div class="proj__meta">
                 <div class="proj__text">
                   <h3 class="proj__title">{p.title}</h3>
-                  <span class="eyebrow eyebrow--sm">{[p.industry, p.platform].filter(Boolean).join(' · ')}</span>
+                  {p.industry && <span class="eyebrow eyebrow--sm">{p.industry}</span>}
                   {p.summary && <p class="proj__sum">{p.summary}</p>}
                 </div>
                 {hasLink && (

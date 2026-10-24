@@ -143,7 +143,7 @@ mm.add('(prefers-reduced-motion: no-preference)', () => {
   $$('[data-proj]').forEach((card) => {
     const img = $('[data-proj-img]', card);
     const tl = gsap.timeline({ scrollTrigger: { trigger: card, start: 'top 90%', once: true } });
-    tl.from(card, { y: 40, opacity: 0, duration: 0.9, ease: EASE });
+    tl.from(card, { y: 40, opacity: 0, duration: 0.9, ease: EASE, clearProps: 'transform,opacity' });
     if (img) tl.from(img, { scale: 1.12, duration: 1.3, ease: EASE, clearProps: 'transform' }, 0);
   });
 
