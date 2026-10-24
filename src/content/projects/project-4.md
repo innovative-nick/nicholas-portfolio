@@ -1,6 +1,6 @@
 ---
 title: AmeriCore Group
-industry: "[Industry]"
+industry: Real estate advisory
 platform: Website
 summary: "[One line on what you built and the result]"
 image: /images/Americore Web Mock up.jpg
