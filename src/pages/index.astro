@@ -1,0 +1,300 @@
+---
+import '@fontsource-variable/archivo/wdth.css';
+import '@fontsource-variable/inter';
+import '../styles/global.css';
+import Arrow from '../components/Arrow.astro';
+import site from '../data/site.json';
+
+// Projects are managed in Pages CMS (src/content/projects/*.md).
+const projectFiles = import.meta.glob('../content/projects/*.md', { eager: true });
+const projects = Object.values(projectFiles)
+  .map((f) => f.frontmatter)
+  .filter((p) => p && p.published !== false)
+  .sort((a, b) => (a.order ?? 99) - (b.order ?? 99));
+
+const services = [
+  { title: 'Website Design & Development', desc: 'Full sites, designed and built to be responsive and fast' },
+  { title: 'Landing Pages & Funnels', desc: 'Focused pages built to capture leads and drive sign-ups', dark: true },
+  { title: 'AI Automation', desc: 'Workflows that take repetitive tasks off your plate' },
+  { title: 'Chatbot Development', desc: 'AI chatbots that answer questions and capture leads 24/7' },
+];
+
+const skills = [
+  { title: 'Design & UX', desc: 'Layouts people understand at a glance.', tags: ['UI / UX design', 'Responsive design', 'Conversion layouts', 'Figma prototyping'], r: -3 },
+  { title: 'Code', desc: 'Front-end builds, from static pages to React.', tags: ['HTML & CSS', 'JavaScript', 'React', 'Tailwind CSS', 'Python'], r: 2.5 },
+  { title: 'Platforms', desc: 'Built in the tools your team already uses.', tags: ['WordPress', 'Wix', 'Squarespace', 'GoHighLevel (GHL)', 'Other website builders'], r: -1.5 },
+  { title: 'AI & Automation', desc: 'Smarter sites that do some of the work for you.', tags: ['Prompt engineering', 'Workflow automation', 'Chatbots'], r: 3 },
+];
+
+const pad = (n) => String(n).padStart(2, '0');
+const tel = site.phone.replace(/[^+\d]/g, '');
+const lead = "I'm a website designer and developer focused on building clean, effective websites that do more than just look good.";
+const year = new Date().getFullYear();
+const [sinceA, sinceB] = (() => {
+  const i = site.since.toLowerCase().lastIndexOf(' since');
+  return i > 0 ? [site.since.slice(0, i), site.since.slice(i + 1)] : [site.since, ''];
+})();
+const title = `${site.name} | Web Designer & Developer`;
+const description = site.hero_intro;
+---
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>{title}</title>
+  <meta name="description" content={description} />
+  <link rel="canonical" href={Astro.site} />
+  <meta property="og:type" content="website" />
+  <meta property="og:title" content={title} />
+  <meta property="og:description" content={description} />
+  <meta property="og:image" content={new URL('/images/og.jpg', Astro.site)} />
+  <meta name="twitter:card" content="summary_large_image" />
+  <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+  <link rel="preload" as="image" href="/images/portrait.webp" type="image/webp" />
+  <script is:inline>
+    (function () {
+      var d = document.documentElement;
+      d.classList.add('js');
+      if (!matchMedia('(prefers-reduced-motion: reduce)').matches) {
+        d.classList.add('motion');
+        // Safety net: if the animation script never runs, show everything.
+        setTimeout(function () { if (!d.classList.contains('anim-ready')) d.classList.remove('motion'); }, 3500);
+      }
+    })();
+  </script>
+</head>
+<body>
+  <a class="skip" href="#main">Skip to content</a>
+
+  <!-- HEADER -->
+  <header class="header" data-header>
+    <div class="header__inner wrap">
+      <a class="brand" href="#top">{site.name.toUpperCase()}</a>
+      <nav class="nav" aria-label="Main">
+        <a class="pill" href="#top">Home</a>
+        <a class="pill" href="#about">About</a>
+        <a class="pill" href="#services">Services</a>
+        <a class="pill" href="#work">Work</a>
+      </nav>
+      <div class="header__actions">
+        <a class="btn btn--dark btn--sm header__cta" href="#contact">Let's talk <Arrow size={16} stroke={2} /></a>
+        <button class="menu-btn" type="button" aria-label="Open menu" aria-expanded="false" aria-controls="menu" data-menu-btn>
+          <span></span><span></span>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <!-- MOBILE MENU -->
+  <div class="menu" id="menu" data-menu hidden>
+    <nav class="menu__nav" aria-label="Mobile">
+      <a href="#top" data-menu-link>Home</a>
+      <a href="#about" data-menu-link>About</a>
+      <a href="#services" data-menu-link>Services</a>
+      <a href="#work" data-menu-link>Work</a>
+      <a href="#contact" data-menu-link>Contact</a>
+    </nav>
+    <div class="menu__foot" data-menu-link>
+      <a href={`mailto:${site.email}`}>{site.email}</a>
+    </div>
+  </div>
+
+  <main id="main">
+
+    <!-- HERO -->
+    <section class="hero wrap" id="top">
+      <p class="hero__hi" data-hero>{site.greeting}</p>
+      <h1 class="hero__title">
+        <span class="line"><span class="line__in grad-1" data-hero-line>Web Designer</span></span>
+        <span class="line"><span class="line__in grad-2" data-hero-line>&amp; Developer</span></span>
+      </h1>
+
+      <div class="hero__grid">
+        <div class="hero__left">
+          <p class="eyebrow hero__since" data-hero>{site.since}</p>
+          <a class="circle circle--lg hero__down" href="#work" aria-label="Scroll to my work" data-hero data-bob><Arrow dir="down-right" size={26} stroke={1.6} /></a>
+          <p class="hero__intro" data-hero>{site.hero_intro}</p>
+          <div class="hero__btns" data-hero>
+            <a class="btn btn--dark" href="#work">View my work</a>
+            <a class="btn btn--line" href="#contact">Let's talk</a>
+          </div>
+        </div>
+
+        <div class="hero__photo">
+          <div class="hero__photo-inner" data-portrait>
+            <picture>
+              <source srcset="/images/portrait.webp" type="image/webp" />
+              <img src="/images/portrait.png" alt={`Portrait of ${site.name}`} width="770" height="900" fetchpriority="high" />
+            </picture>
+            <p class="hero__since-overlay" data-hero>{sinceA}<br />{sinceB}</p>
+          </div>
+        </div>
+
+        <ul class="hero__list" data-hero>
+          <li>UI / UX Design</li>
+          <li>Website Development</li>
+          <li>Landing Pages</li>
+          <li>Figma Prototyping</li>
+        </ul>
+      </div>
+    </section>
+
+    <!-- STATS -->
+    <section class="wrap stats-wrap" aria-label="Key numbers">
+      <div class="stats" data-stats>
+        {site.stats.map((s) => (
+          <div class="stat">
+            <span class="stat__num" data-count={s.value}>{s.value}</span>
+            <span class="stat__label">{s.label}</span>
+          </div>
+        ))}
+      </div>
+    </section>
+
+    <!-- ABOUT -->
+    <section class="about wrap section" id="about">
+      <div class="about__head" data-about-head>
+        <h2 class="display grad-v">About</h2>
+        <span class="circle circle--sm about__arrow" aria-hidden="true" data-about-arrow><Arrow dir="down-right" /></span>
+      </div>
+      <div class="about__body">
+        <p class="about__lead" data-words>
+          {lead.split(' ').map((w) => <span class="w">{w} </span>)}
+        </p>
+        <p class="body-text" data-reveal>My approach brings design, development and user experience together to create websites that are easy to use, responsive on every device and built with purpose. I pay close attention to structure, clarity and performance, because a good website isn't just visual. It works.</p>
+      </div>
+    </section>
+
+    <!-- SERVICES -->
+    <section class="services wrap section" id="services">
+      <div class="services__head" data-reveal>
+        <h2 class="h2">What I Do</h2>
+        <p class="body-text">Design and development under one roof, so nothing gets lost between the mockup and the live site.</p>
+      </div>
+      <div class="services__list" data-services>
+        {services.map((s, i) => (
+          <div class={`svc${s.dark ? ' svc--dark' : ''}`}>
+            <span class="svc__num">{pad(i + 1)}</span>
+            <div class="svc__pill">
+              <span class="svc__title">{s.title}</span>
+              <span class="svc__desc">{s.desc}</span>
+            </div>
+          </div>
+        ))}
+      </div>
+    </section>
+
+    <!-- SKILLS -->
+    <section class="skills wrap section" id="skills">
+      <div class="skills__head" data-reveal>
+        <h2 class="h2">Skills &amp; Tools</h2>
+        <p class="body-text">I work in whatever stack the project already runs on, so you don't have to change platforms to work with me.</p>
+      </div>
+      <div class="skills__grid" data-skills>
+        {skills.map((s, i) => (
+          <div class="sk-wrap" style={`--r:${s.r}deg`} data-sk>
+            <div class="sk-sway" data-sway>
+              <article class={`sk ${i % 2 === 0 ? 'sk--dark' : 'sk--light'}`}>
+                <div class="sk__top">
+                  <span class="sk__num">{pad(i + 1)}</span>
+                  <h3 class="sk__title">{s.title}</h3>
+                </div>
+                <p class="sk__desc">{s.desc}</p>
+                <ul class="sk__tags">
+                  {s.tags.map((t) => <li>{t}</li>)}
+                </ul>
+              </article>
+            </div>
+          </div>
+        ))}
+      </div>
+    </section>
+
+    <!-- WORK -->
+    <section class="work wrap section" id="work">
+      <div class="work__head">
+        <div class="work__title-wrap">
+          <h2 class="display display--md grad-v" data-reveal>Featured<br class="br-mobile" /> Work</h2>
+          <span class="eyebrow" data-reveal>Live websites</span>
+        </div>
+        <p class="body-text work__intro" data-reveal>A selection of live builds, from single landing pages to full multi-page sites.</p>
+      </div>
+      <div class="work__grid">
+        {projects.map((p) => {
+          const hasLink = p.link && p.link.trim() !== '';
+          const Img = hasLink ? 'a' : 'div';
+          return (
+            <article class="proj" data-proj>
+              <Img class="proj__img" {...(hasLink ? { href: p.link, target: '_blank', rel: 'noopener', 'data-cursor': '', 'aria-label': `View ${p.title} live` } : {})}>
+                {p.image ? (
+                  <img src={p.image} alt={`${p.title} website`} loading="lazy" decoding="async" data-proj-img />
+                ) : (
+                  <span class="proj__ph" data-proj-img>Screenshot</span>
+                )}
+              </Img>
+              <div class="proj__meta">
+                <div class="proj__text">
+                  <h3 class="proj__title">{p.title}</h3>
+                  <span class="eyebrow eyebrow--sm">{[p.industry, p.platform].filter(Boolean).join(' · ')}</span>
+                  {p.summary && <p class="proj__sum">{p.summary}</p>}
+                </div>
+                {hasLink && (
+                  <a class="circle circle--md" href={p.link} target="_blank" rel="noopener" aria-label={`Open ${p.title} in a new tab`}><Arrow /></a>
+                )}
+              </div>
+            </article>
+          );
+        })}
+      </div>
+    </section>
+
+    <!-- FIGMA -->
+    <section class="figma wrap section" id="designs">
+      <div class="figma__panel" data-reveal>
+        <div class="figma__top">
+          <div class="figma__text">
+            <span class="eyebrow">UI / UX Design Collection</span>
+            <h2 class="h2">Figma Designs</h2>
+            <p class="body-text">Website and UI concepts designed in Figma, focused on layout structure, usability and conversion-driven design. Click through the full prototype to see how each page flows.</p>
+          </div>
+          <a class="btn btn--dark figma__btn" href={site.figma_link} target="_blank" rel="noopener">View designs in Figma <Arrow size={16} stroke={2} /></a>
+        </div>
+        <a class="figma__img" href={site.figma_link} target="_blank" rel="noopener" aria-label="Open the Figma prototype" data-cursor>
+          <img src={site.figma_image} alt="Collage of website designs created in Figma" loading="lazy" decoding="async" width="980" height="446" data-figma-img />
+        </a>
+      </div>
+    </section>
+
+    <!-- CONTACT -->
+    <section class="contact" id="contact" data-contact>
+      <div class="contact__inner wrap">
+        <div class="contact__main">
+          <p class="eyebrow eyebrow--light" data-reveal>Have a project in mind?</p>
+          <h2 class="contact__title">
+            <span class="line"><span class="line__in grad-w1" data-talk-line>Let's</span></span>
+            <span class="line"><span class="line__in grad-w2" data-talk-line>Talk</span></span>
+          </h2>
+          <p class="contact__text" data-reveal>Tell me what you're building. I'll reply within 24 hours with next steps.</p>
+          <a class="contact__email" href={`mailto:${site.email}`} data-reveal>{site.email}</a>
+          <a class="contact__phone" href={`tel:${tel}`} data-reveal>{site.phone}</a>
+        </div>
+        <div class="contact__links" data-reveal>
+          <a class="pill pill--light" href={site.whatsapp} target="_blank" rel="noopener">WhatsApp</a>
+          <a class="pill pill--light" href={site.linkedin} target="_blank" rel="noopener">LinkedIn</a>
+        </div>
+        <footer class="footer">
+          <span>© {year} {site.name}. All rights reserved.</span>
+          <span>Web Designer &amp; Developer</span>
+        </footer>
+      </div>
+    </section>
+  </main>
+
+  <div class="cursor" aria-hidden="true" data-cursor-dot>View</div>
+
+  <script>
+    import '../scripts/main.js';
+  </script>
+</body>
+</html>

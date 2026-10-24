@@ -1,0 +1,99 @@
+media:
+  input: public/images
+  output: /images
+
+content:
+  - name: projects
+    label: Projects
+    type: collection
+    path: src/content/projects
+    filename: "{primary}.md"
+    view:
+      fields: [title, industry, platform, published]
+      primary: title
+      sort: [order, title]
+      default:
+        sort: order
+        order: asc
+    fields:
+      - name: title
+        label: Project name
+        type: string
+        required: true
+      - name: industry
+        label: Industry
+        type: string
+        description: e.g. Real estate, Finance, Aviation
+      - name: platform
+        label: Platform
+        type: select
+        options:
+          values: [Website, GoHighLevel, WordPress, Wix, Squarespace, Webflow, Custom code, Landing page]
+      - name: summary
+        label: One-line summary
+        type: text
+        description: What you built and the result, in one sentence.
+      - name: image
+        label: Screenshot
+        type: image
+        description: Landscape screenshot, ideally 1600 × 1200 px (4:3). The top of the image is shown.
+      - name: link
+        label: Live website link
+        type: string
+        description: Full address including https://. Leave empty if the site isn't public.
+      - name: order
+        label: Position on the page
+        type: number
+        description: 1 shows first.
+      - name: published
+        label: Show on website
+        type: boolean
+        default: true
+
+  - name: site
+    label: Site settings
+    type: file
+    path: src/data/site.json
+    format: json
+    fields:
+      - name: name
+        label: Your name
+        type: string
+      - name: greeting
+        label: Hero greeting
+        type: string
+      - name: since
+        label: "\"Since\" line"
+        type: string
+      - name: hero_intro
+        label: Hero intro sentence
+        type: text
+      - name: stats
+        label: Stats
+        type: object
+        list: { min: 3, max: 3 }
+        fields:
+          - name: value
+            label: Number (e.g. 20+)
+            type: string
+          - name: label
+            label: Label
+            type: string
+      - name: email
+        label: Email
+        type: string
+      - name: phone
+        label: Phone
+        type: string
+      - name: whatsapp
+        label: WhatsApp link
+        type: string
+      - name: linkedin
+        label: LinkedIn link
+        type: string
+      - name: figma_link
+        label: Figma prototype link
+        type: string
+      - name: figma_image
+        label: Figma section image
+        type: image

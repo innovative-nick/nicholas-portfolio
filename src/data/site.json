@@ -1,0 +1,17 @@
+{
+  "name": "Nicholas Aghah",
+  "greeting": "Hi, I'm Nicholas:",
+  "since": "Designing & building since 2022",
+  "hero_intro": "I design and build modern, responsive websites that look sharp, load fast and turn visitors into enquiries.",
+  "stats": [
+    { "value": "4+", "label": "Years experience" },
+    { "value": "20+", "label": "Projects delivered" },
+    { "value": "10+", "label": "Industries served" }
+  ],
+  "email": "codeyklaus@gmail.com",
+  "phone": "+234 704 468 4108",
+  "whatsapp": "https://wa.me/message/SXS3DCXT5E2DN1",
+  "linkedin": "https://www.linkedin.com/in/nicholas-aghah",
+  "figma_link": "https://www.figma.com/proto/5IkFwwdKQDlDIxvfPJBgzK/Nibilt?node-id=1167-336&p=f&viewport=2157%2C598%2C0.07&t=bZh8ZPwKEFgljXUV-1&scaling=min-zoom&content-scaling=fixed&starting-point-node-id=1167%3A336&page-id=706%3A162",
+  "figma_image": "/images/figma-designs.jpg"
+}

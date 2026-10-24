@@ -1,0 +1,9 @@
+---
+// Diagonal arrow icon. dir: 'up-right' (default) or 'down-right'.
+const { dir = 'up-right', size = 18, stroke = 1.8 } = Astro.props;
+---
+{dir === 'down-right' ? (
+  <svg class="arrow" aria-hidden="true" width={size} height={size} viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width={stroke} stroke-linecap="round" stroke-linejoin="round"><path d="M7 7l10 10"></path><path d="M17 8v9H8"></path></svg>
+) : (
+  <svg class="arrow" aria-hidden="true" width={size} height={size} viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width={stroke} stroke-linecap="round" stroke-linejoin="round"><path d="M7 17L17 7"></path><path d="M8 7h9v9"></path></svg>
+)}
