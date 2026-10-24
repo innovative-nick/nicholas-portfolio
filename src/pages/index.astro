@@ -4,13 +4,27 @@ import '@fontsource-variable/inter';
 import '../styles/global.css';
 import Arrow from '../components/Arrow.astro';
 import site from '../data/site.json';
+import fs from 'node:fs';
+import path from 'node:path';
 
 // Projects are managed in Pages CMS (src/content/projects/*.md).
 const projectFiles = import.meta.glob('../content/projects/*.md', { eager: true });
 const projects = Object.values(projectFiles)
   .map((f) => f.frontmatter)
   .filter((p) => p && p.published !== false)
-  .sort((a, b) => (a.order ?? 99) - (b.order ?? 99));
+  .sort((a, b) => (a.order ?? 99) - (b.order ?? 99))
+  .map((p) => ({ ...p, title: String(p.title ?? '').trim(), card: cardImage(p.image) }));
+
+// Use the resized WebP copies made by scripts/optimize-images.mjs when they exist.
+function cardImage(image) {
+  if (!image) return null;
+  const file = decodeURIComponent(String(image).trim()).split('/').pop();
+  const base = file.toLowerCase().replace(/\.[a-z0-9]+$/, '').replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '');
+  const small = `/images/cards/${base}-700.webp`;
+  const large = `/images/cards/${base}-1200.webp`;
+  if (!fs.existsSync(path.join(process.cwd(), 'public', large))) return { src: encodeURI(String(image).trim()), srcset: null };
+  return { src: large, srcset: `${small} 700w, ${large} 1200w` };
+}
 
 const services = [
   { title: 'Website Design & Development', desc: 'Full sites, designed and built to be responsive and fast' },
@@ -227,8 +241,8 @@ const description = site.hero_intro;
           return (
             <article class="proj" data-proj>
               <Img class="proj__img" {...(hasLink ? { href: p.link, target: '_blank', rel: 'noopener', 'data-cursor': '', 'aria-label': `View ${p.title} live` } : {})}>
-                {p.image ? (
-                  <img src={p.image} alt={`${p.title} website`} loading="lazy" decoding="async" data-proj-img />
+                {p.card ? (
+                  <img src={p.card.src} srcset={p.card.srcset ?? undefined} sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 420px" alt={`${p.title} website shown on a laptop`} loading="lazy" decoding="async" data-proj-img />
                 ) : (
                   <span class="proj__ph" data-proj-img>Screenshot</span>
                 )}
