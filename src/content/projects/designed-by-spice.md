@@ -1,10 +1,10 @@
 ---
-title: Designed by Spice
-industry: "[Industry]"
+title: Love The Script
+industry: E-commerce
 platform: Website
-summary: "[One line on what you built and the result]"
-image: ""
-link: https://www.designedbyspice.com
+summary: "A UK brand selling faith-inspired blankets, canvases and home décor. "
+image: /images/Love The SCript Web Mock up.jpg
+link: https://lovethescript.com/
 order: 1
 published: true
 ---
